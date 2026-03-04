@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEGACY ARENA | Elite Gaming Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-animate text-white">
+
+    <div id="authGate" class="fixed inset-0 z-[2000] bg-[#050505] flex items-center justify-center px-4">
+        <div class="max-w-md w-full glass-card rounded-3xl overflow-hidden shadow-2xl">
+            <div class="flex border-b border-white/10">
+                <button type="button" onclick="toggleAuthTab('login')" id="tab-login" class="flex-1 py-5 heading-font text-[10px] tracking-widest uppercase font-bold text-cyan-400 border-b-2 border-cyan-400">Sign In</button>
+                <button type="button" onclick="toggleAuthTab('register')" id="tab-register" class="flex-1 py-5 heading-font text-[10px] tracking-widest uppercase font-bold text-gray-500">Register</button>
+            </div>
+            <div class="p-8">
+                <form id="form-login" class="space-y-5">
+                    <input type="text" id="login-tag" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none text-white" placeholder="Gamer Tag">
+                    <input type="password" id="login-key" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl focus:border-cyan-400 outline-none text-white" placeholder="Access Key">
+                    <button type="submit" class="w-full bg-cyan-500 text-black py-4 font-bold uppercase tracking-widest hover:shadow-[0_0_20px_#00f2ff] transition">Initialize Session</button>
+                </form>
+                <form id="form-register" class="hidden space-y-4">
+                    <input type="text" id="reg-name" required placeholder="Full Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-white focus:border-purple-500">
+                    <input type="email" id="reg-email" required placeholder="Email Address" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-white focus:border-purple-500">
+                    <input type="text" id="reg-tag" required placeholder="Desired Gamer Tag" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-white focus:border-purple-500">
+                    <input type="password" id="reg-pass" required placeholder="Security Password" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none text-white focus:border-purple-500">
+                    <button type="submit" class="w-full bg-purple-600 text-white py-4 font-bold uppercase tracking-widest transition">Complete Registration</button>
+                </form>
+                <p id="authStatus" class="text-center text-[10px] text-gray-500 uppercase mt-6 tracking-widest min-h-[20px]"></p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed w-full z-[100] px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/10">
+        <div class="heading-font text-xl font-bold italic tracking-tighter">LEGACY<span class="text-cyan-400">ARENA</span></div>
+        <div class="hidden lg:flex space-x-10 uppercase text-[10px] tracking-[0.3em] font-bold text-gray-300">
+            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
+            <a href="#tournaments" class="hover:text-cyan-400 transition">Tournaments</a>
+            <a href="#pricing" class="hover:text-cyan-400 transition">Memberships</a>
+            <button onclick="openContactModal()" class="hover:text-cyan-400 transition uppercase">Contact</button>
+            <button onclick="handleLogout()" class="text-red-500 hover:text-white transition uppercase font-bold text-[10px]">Logout <i class="fa-solid fa-power-off ml-1"></i></button>
+        </div>
+        <div class="lg:hidden" style="position: relative; z-index: 9999 !important;">
+    <button id="menuBtn" class="p-4 text-cyan-400 text-4xl" style="pointer-events: auto !important;">
+        <i class="fa-solid fa-bars-staggered"></i>
+    </button>
+</div>
+
+<div id="mobileMenu" class="fixed inset-0 z-[999] hidden bg-black/95 backdrop-blur-xl flex-col items-center justify-center">
+    <button onclick="toggleMobileMenu()" class="absolute top-10 right-10 text-white text-2xl">CLOSE ✕</button>
+    <a href="#home" onclick="toggleMobileMenu()" class="py-4 text-2xl">HOME</a>
+    <button onclick="handleLogout()" class="mt-10 text-red-500 font-bold">LOGOUT</button>
+</div>
+    </nav>
+
+    <main>
+        <section id="home" class="min-h-screen flex flex-col items-center justify-center pt-20 relative overflow-hidden bg-[#020205]">
+    <canvas id="particleCanvas" class="absolute inset-0 z-0"></canvas>
+
+    <div class="text-center z-10" data-aos="fade-up">
+    <h1 class="heading-font text-6xl md:text-9xl font-black mb-4 glitch uppercase tracking-tighter leading-none">
+        LEGACY <br> 
+        <span class="text-white">ARENA</span>
+    </h1>
+    <p class="text-gray-500 text-xs md:text-sm tracking-[0.8em] uppercase font-bold mb-10">
+        Beyond Human Limits
+    </p>
+
+    <button onclick="openContactModal()" class="arena-btn px-16 py-5 font-bold uppercase text-[12px] tracking-[0.3em] rounded-full relative overflow-hidden transition-all duration-500">
+        <span class="relative z-10">Enter The Arena</span>
+        <div class="btn-glow absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </button>
+</div>
+</section>
+
+        <section id="next-event" class="py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+        <div class="tournament-highlight-card glass-card group rounded-[50px] overflow-hidden relative border border-white/5" data-aos="zoom-in-up">
+            
+            <div class="absolute inset-0 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200" 
+                     class="w-full h-full object-cover group-hover:scale-110 transition duration-[2s] opacity-40 filter grayscale group-hover:grayscale-0">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/80 to-transparent"></div>
+            </div>
+
+            <div class="relative p-12 md:p-20 flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-2/3 text-left">
+                    <div class="flex items-center space-x-4 mb-6" data-aos="fade-right" data-aos-delay="200">
+                        <span class="w-12 h-[2px] bg-cyan-400"></span>
+                        <span class="heading-font text-[10px] text-cyan-400 tracking-[0.4em] uppercase font-bold">Featured Event</span>
+                    </div>
+                    
+                    <h2 class="heading-font text-4xl md:text-6xl font-black mb-6 italic uppercase leading-none">
+                        VALORANT <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">LEGACY CUP</span>
+                    </h2>
+                    
+                    <p class="text-gray-400 text-xs md:text-sm mb-10 max-w-lg uppercase tracking-widest leading-relaxed">
+                        The ultimate battle for supremacy. Squad up with the elite and claim your place in the arena's hall of fame. Huge prize pool and professional scouting.
+                    </p>
+
+                    <div class="flex flex-wrap gap-6 items-center">
+                        <button onclick="openContactModal()" class="bg-white text-black px-10 py-4 font-bold uppercase text-[10px] tracking-widest hover:bg-cyan-400 transition-all duration-500 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-cyan-500/50">
+                            Register Now
+                        </button>
+                        <div class="text-left">
+                            <p class="text-[8px] text-gray-500 uppercase tracking-widest mb-1">Starts In</p>
+                            <p class="heading-font text-lg text-white italic">14:05:22:10</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/3 w-full" data-aos="fade-left" data-aos-delay="400">
+                    <div class="glass-card bg-white/5 border-white/10 p-8 rounded-[30px] text-center backdrop-blur-md group-hover:border-cyan-400/30 transition-all duration-700">
+                        <i class="fa-solid fa-trophy text-4xl text-yellow-500 mb-4 animate-bounce"></i>
+                        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-2">Grand Prize Pool</p>
+                        <h4 class="heading-font text-3xl font-bold text-white">₹1,00,000</h4>
+                        <div class="mt-6 pt-6 border-t border-white/10 flex justify-around">
+                            <div>
+                                <p class="text-[8px] text-gray-500 uppercase">Teams</p>
+                                <p class="font-bold">32/64</p>
+                            </div>
+                            <div>
+                                <p class="text-[8px] text-gray-500 uppercase">Region</p>
+                                <p class="font-bold">ASIA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+        <section id="tournaments" class="py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+        <h3 class="heading-font text-4xl mb-16 italic text-center uppercase tracking-tighter" data-aos="fade-down">
+            Elite <span class="text-cyan-400">Leagues</span>
+        </h3>
+        
+        <div class="grid md:grid-cols-2 gap-10">
+            <div class="tournament-card glass-card group overflow-hidden rounded-[40px] relative" data-aos="flip-left">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800" class="h-full w-full object-cover group-hover:scale-110 transition duration-700" alt="Valorant">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent"></div>
+                </div>
+                <div class="p-8 relative">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full font-bold uppercase tracking-widest">Live Now</span>
+                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">Prize: ₹50,000</span>
+                    </div>
+                    <h4 class="heading-font text-2xl mb-4 uppercase group-hover:text-cyan-400 transition">Valorant Masters</h4>
+                    <p class="text-gray-400 text-xs mb-8 leading-relaxed uppercase tracking-wider">Join the premier 5v5 tactical shooter circuit. Only for verified legacy teams.</p>
+                    <button onclick="openContactModal()" class="w-full border border-white/10 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest group-hover:bg-cyan-400 group-hover:text-black transition-all duration-500">Register Squad</button>
+                </div>
+            </div>
+
+            <div class="tournament-card glass-card group overflow-hidden rounded-[40px] relative" data-aos="flip-right" data-aos-delay="200">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800" class="h-full w-full object-cover group-hover:scale-110 transition duration-700" alt="CS2">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#050505] to-transparent"></div>
+                </div>
+                <div class="p-8 relative">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-[10px] bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full font-bold uppercase tracking-widest">Coming Soon</span>
+                        <span class="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">Prize: ₹25,000</span>
+                    </div>
+                    <h4 class="heading-font text-2xl mb-4 uppercase group-hover:text-purple-500 transition">CS2 Open</h4>
+                    <p class="text-gray-400 text-xs mb-8 leading-relaxed uppercase tracking-wider">Fast-paced competitive action. Skill meets legacy in the arena.</p>
+                    <button onclick="openContactModal()" class="w-full border border-white/10 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest group-hover:bg-purple-600 group-hover:text-white transition-all duration-500">Notify Me</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="leaderboard" class="py-32 px-6 bg-black/40">
+    <div class="max-w-5xl mx-auto">
+        <h3 class="heading-font text-5xl md:text-7xl font-black mb-16 italic text-center uppercase tracking-tighter text-white" data-aos="fade-down">
+            TOP <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-600 drop-shadow-[0_0_15px_rgba(251,191,36,0.4)]">STRIKERS</span>
+        </h3>
+
+        <div class="leaderboard-container glass-card rounded-[40px] overflow-hidden border-2 border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.15)]" data-aos="fade-up">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-cyan-500/10 text-[11px] uppercase tracking-[0.4em] text-cyan-400 font-black">
+                        <th class="p-8">Rank</th>
+                        <th class="p-8">Player</th>
+                        <th class="p-8">Game</th>
+                        <th class="p-8 text-right">Score</th>
+                    </tr>
+                </thead>
+                <tbody class="text-xs uppercase tracking-widest font-black text-white">
+                    <tr class="border-b border-white/5 hover:bg-cyan-500/5 transition-all duration-300 group cursor-pointer">
+                        <td class="p-8 text-yellow-500 italic text-xl">#01</td>
+                        <td class="p-8 flex items-center space-x-4">
+                            <div class="w-10 h-10 rounded-full border-2 border-yellow-500 shadow-[0_0_10px_#f59e0b] bg-yellow-500/20 flex items-center justify-center">
+                                <i class="fa-solid fa-crown text-yellow-500 text-xs"></i>
+                            </div>
+                            <span class="group-hover:text-cyan-400 transition">ShadowWalker</span>
+                        </td>
+                        <td class="p-8 text-gray-400">Valorant</td>
+                        <td class="p-8 text-right text-cyan-400 text-lg">2,450 XP</td>
+                    </tr>
+                    <tr class="border-b border-white/5 hover:bg-cyan-400/5 transition-all duration-300 group cursor-pointer">
+                        <td class="p-8 text-gray-400 italic text-xl">#02</td>
+                        <td class="p-8 flex items-center space-x-4">
+                            <div class="w-10 h-10 rounded-full border-2 border-gray-400 bg-gray-400/20"></div>
+                            <span class="group-hover:text-cyan-400 transition">GhostRider</span>
+                        </td>
+                        <td class="p-8 text-gray-400">CS2</td>
+                        <td class="p-8 text-right text-cyan-400 text-lg">2,120 XP</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <div id="contactModal" class="fixed inset-0 z-[3000] bg-black/95 hidden items-center justify-center p-4 backdrop-blur-2xl">
+    <div class="glass-card max-w-4xl w-full rounded-[40px] overflow-hidden border border-white/10 shadow-2xl relative" data-aos="zoom-in">
+        
+        <button onclick="closeContactModal()" class="absolute top-6 right-6 text-gray-500 hover:text-cyan-400 transition-all z-50 text-2xl">&times;</button>
+
+        <div class="flex flex-col md:flex-row">
+            
+            <div class="md:w-1/2 p-10 bg-gradient-to-br from-cyan-950/20 to-transparent border-r border-white/5">
+                <h3 class="heading-font text-2xl mb-8 italic text-cyan-400 uppercase tracking-tighter">Arena Info</h3>
+                
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-4 group">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center group-hover:bg-cyan-400/20 transition">
+                            <i class="fa-solid fa-location-dot text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Location</p>
+                            <p class="text-xs font-bold text-gray-300 uppercase">Legacy Arena HQ, Anna Nagar, Chennai</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 group">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition">
+                            <i class="fa-solid fa-phone text-purple-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Support Line</p>
+                            <p class="text-xs font-bold text-gray-300 uppercase">+91 98765 43210</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4 group">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition">
+                            <i class="fa-solid fa-envelope text-blue-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Email</p>
+                            <p class="text-xs font-bold text-gray-300 uppercase">hq@legacyarena.in</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <p class="text-[8px] text-gray-600 uppercase tracking-[0.4em] mb-4">Follow The Legacy</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 glass-card flex items-center justify-center rounded-xl hover:text-cyan-400 transition hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 glass-card flex items-center justify-center rounded-xl hover:text-cyan-400 transition hover:-translate-y-1"><i class="fa-brands fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 p-10 bg-black/40">
+                <h3 class="heading-font text-2xl mb-8 italic text-white uppercase tracking-tighter">Book A Slot</h3>
+                <form id="form-booking" class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-[8px] text-gray-500 uppercase tracking-widest ml-2">Identify Yourself</label>
+                        <input type="text" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-400 text-xs text-white transition">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[8px] text-gray-500 uppercase tracking-widest ml-2">Communication Channel</label>
+                        <input type="email" placeholder="Email Address" required class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:border-cyan-400 text-xs text-white transition">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[8px] text-gray-500 uppercase tracking-widest ml-2">Transmission Details</label>
+                        <textarea placeholder="Tell us your preferred time & PC requirement..." required class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl h-28 outline-none focus:border-cyan-400 text-xs text-white transition resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-cyan-500 text-black py-4 font-black uppercase text-[10px] tracking-[0.3em] rounded-2xl shadow-[0_0_20px_rgba(0,242,255,0.2)] hover:shadow-cyan-400/50 hover:-translate-y-1 transition-all duration-300">
+                        Request Access
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+   <section id="pricing" class="py-32 px-6 bg-black/30">
+    <div class="max-w-7xl mx-auto text-center">
+        <h3 class="heading-font text-4xl mb-16 italic uppercase tracking-tighter" data-aos="fade-down">
+            Membership <span class="text-purple-500">Tiers</span>
+        </h3>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="membership-card glass-card group p-10 rounded-[40px] relative overflow-hidden transition-all duration-500 border border-white/5" data-aos="fade-up" data-aos-delay="100">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-white/5 rounded-full group-hover:bg-white/10 transition-all duration-700"></div>
+                <h4 class="heading-font text-sm text-gray-400 mb-4 uppercase tracking-[0.2em]">Standard</h4>
+                <div class="text-5xl font-bold mb-6 italic text-white group-hover:text-gray-300 transition">₹499</div>
+                <ul class="text-left text-[10px] text-gray-500 space-y-4 mb-10 uppercase tracking-[0.15em] font-bold">
+                    <li><i class="fa-solid fa-bolt text-gray-500 mr-2"></i> 3 Hours Daily Access</li>
+                    <li><i class="fa-solid fa-bolt text-gray-500 mr-2"></i> RTX 3060 Stations</li>
+                    <li><i class="fa-solid fa-circle-xmark text-red-900/50 mr-2"></i> No Tournament Entry</li>
+                </ul>
+                <button onclick="openMemberModal('Standard')" class="w-full border border-white/10 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest group-hover:border-white group-hover:bg-white group-hover:text-black transition-all duration-500">Select Tier</button>
+            </div>
+
+            <div class="membership-card glass-card pro-card group p-10 rounded-[40px] relative overflow-hidden transition-all duration-500 border border-cyan-500/20 shadow-[0_0_20px_rgba(6,182,212,0.05)]" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-500 text-black px-6 py-1 text-[8px] font-black uppercase rounded-full tracking-[0.3em] shadow-[0_0_15px_#06b6d4]">Recommended</div>
+                <h4 class="heading-font text-sm text-cyan-400 mb-4 uppercase tracking-[0.2em]">Professional</h4>
+                <div class="text-5xl font-bold mb-6 italic text-white group-hover:scale-110 transition duration-500">₹999</div>
+                <ul class="text-left text-[10px] text-gray-400 space-y-4 mb-10 uppercase tracking-[0.15em] font-bold">
+                    <li><i class="fa-solid fa-bolt text-cyan-400 mr-2"></i> Unlimited Daily Access</li>
+                    <li><i class="fa-solid fa-bolt text-cyan-400 mr-2"></i> RTX 4080 Stations</li>
+                    <li><i class="fa-solid fa-bolt text-cyan-400 mr-2"></i> Weekly Tournament Entry</li>
+                </ul>
+                <button onclick="openMemberModal('Professional')" class="w-full bg-cyan-500 text-black py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.3)] group-hover:shadow-[0_0_30px_#06b6d4] transition-all duration-500">Select Tier</button>
+            </div>
+
+            <div class="membership-card glass-card ultimate-card group p-10 rounded-[40px] relative overflow-hidden transition-all duration-500 border border-purple-500/20" data-aos="fade-up" data-aos-delay="300">
+                <h4 class="heading-font text-sm text-purple-500 mb-4 uppercase tracking-[0.2em]">Ultimate</h4>
+                <div class="text-5xl font-bold mb-6 italic text-white group-hover:scale-110 transition duration-500">₹1999</div>
+                <ul class="text-left text-[10px] text-gray-400 space-y-4 mb-10 uppercase tracking-[0.15em] font-bold">
+                    <li><i class="fa-solid fa-crown text-purple-500 mr-2"></i> VIP Private Cabin</li>
+                    <li><i class="fa-solid fa-bolt text-purple-500 mr-2"></i> RTX 4090 Stations</li>
+                    <li><i class="fa-solid fa-bolt text-purple-500 mr-2"></i> Pro League Access</li>
+                </ul>
+                <button onclick="openMemberModal('Ultimate')" class="w-full bg-purple-600 text-white py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest shadow-[0_0_20px_rgba(147,51,234,0.3)] group-hover:bg-purple-500 group-hover:shadow-[0_0_30px_#9333ea] transition-all duration-500">Select Tier</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="memberModal" class="fixed inset-0 z-[3000] bg-black/95 hidden items-center justify-center p-6 backdrop-blur-xl">
+    <div class="glass-card max-w-md w-full p-10 rounded-3xl relative border-purple-500/20 shadow-2xl">
+        <button onclick="closeMemberModal()" class="absolute top-8 right-8 text-gray-500 text-3xl hover:text-white">&times;</button>
+        <h2 class="heading-font text-2xl text-purple-500 mb-2 italic text-center uppercase">Tier Activation</h2>
+        <p id="planNameDisplay" class="text-center text-[10px] text-gray-400 uppercase tracking-widest mb-8"></p>
+        <form id="form-membership" class="space-y-4">
+            <input type="hidden" id="m-plan">
+            <input type="text" id="m-name" placeholder="Full Name" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-purple-500">
+            <input type="email" id="m-email" placeholder="Email Address" required class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-white outline-none focus:border-purple-500">
+            <button type="submit" class="w-full bg-purple-600 text-white py-4 font-bold uppercase text-[10px] tracking-widest">Process Enrollment</button>
+        </form>
+    </div>
+</div>
+<footer class="py-20 px-6 border-t border-white/5 bg-black/60 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+            <div class="md:col-span-2">
+                <h2 class="heading-font text-3xl font-black italic uppercase tracking-tighter mb-6">
+                    LEGACY<span class="text-cyan-400">ARENA</span>
+                </h2>
+                <p class="text-gray-500 text-xs uppercase tracking-widest leading-relaxed max-w-sm">
+                    The ultimate destination for competitive gaming. Powered by RTX 4090, built for the elite. Join the legacy today.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-white mb-6">Explore</h4>
+                <ul class="space-y-4 text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                    <li><a href="#home" class="hover:text-cyan-400 transition">Base Camp</a></li>
+                    <li><a href="#tournaments" class="hover:text-cyan-400 transition">War Zones</a></li>
+                    <li><a href="#leaderboard" class="hover:text-cyan-400 transition">Hall of Fame</a></li>
+                    <li><a href="#pricing" class="hover:text-cyan-400 transition">Member Tiers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-white mb-6">Connect</h4>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-cyan-400 text-xl transition hover:-translate-y-1"><i class="fa-brands fa-discord"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-pink-500 text-xl transition hover:-translate-y-1"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-blue-500 text-xl transition hover:-translate-y-1"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-red-600 text-xl transition hover:-translate-y-1"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[8px] text-gray-600 uppercase tracking-[0.5em]">
+                &copy; 2026 LEGACY ARENA. ALL SYSTEMS NOMINAL.
+            </p>
+            <div class="flex space-x-8 text-[8px] text-gray-600 uppercase tracking-widest">
+                <a href="#" class="hover:text-white transition">Privacy Protocol</a>
+                <a href="#" class="hover:text-white transition">Terms of Engagement</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
