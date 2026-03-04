@@ -35,28 +35,37 @@
         </div>
     </div>
 
-    <nav class="fixed w-full z-[100] px-6 py-4 flex justify-between items-center backdrop-blur-md border-b border-white/10">
-        <div class="heading-font text-xl font-bold italic tracking-tighter">LEGACY<span class="text-cyan-400">ARENA</span></div>
-        <div class="hidden lg:flex space-x-10 uppercase text-[10px] tracking-[0.3em] font-bold text-gray-300">
-            <a href="#home" class="hover:text-cyan-400 transition">Home</a>
-            <a href="#tournaments" class="hover:text-cyan-400 transition">Tournaments</a>
-            <a href="#pricing" class="hover:text-cyan-400 transition">Memberships</a>
-            <button onclick="openContactModal()" class="hover:text-cyan-400 transition uppercase">Contact</button>
-            <button onclick="handleLogout()" class="text-red-500 hover:text-white transition uppercase font-bold text-[10px]">Logout <i class="fa-solid fa-power-off ml-1"></i></button>
-        </div>
-    <div id="mobileMenu" class="fixed inset-0 z-[5000] hidden bg-black/98 backdrop-blur-xl flex-col items-center justify-center p-6">
+    <nav class="flex justify-between items-center p-4 fixed top-0 w-full z-[1000] bg-black/50 backdrop-blur-md">
+    <div class="text-white font-bold text-xl heading-font">LEGACY ARENA</div>
+    
+    <div class="hidden lg:flex gap-6 items-center">
+        <a href="#home" class="text-white hover:text-cyan-400">Home</a>
+        <a href="#tournaments" class="text-white hover:text-cyan-400">Tournaments</a>
+        <a href="#membership" class="text-white hover:text-cyan-400">Membership</a>
+        <a href="#contact" class="text-white hover:text-cyan-400">Contact</a>
+        <button onclick="scrollToSection('booking')" class="bg-cyan-500 text-black px-4 py-2 rounded-lg font-bold">BOOK SLOT</button>
+    </div>
+
+    <div class="lg:hidden relative z-[9999]">
+        <button onclick="toggleMobileMenu()" class="text-cyan-400 text-3xl p-2">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+</nav>
+
+<div id="mobileMenu" class="fixed inset-0 z-[5000] hidden bg-black/98 backdrop-blur-xl flex-col items-center justify-center p-6">
     <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-cyan-400 text-3xl">
         <i class="fa-solid fa-xmark"></i>
     </button>
     
     <div class="flex flex-col gap-8 text-center text-xl font-bold tracking-widest">
-        <a href="#home" onclick="toggleMobileMenu()" class="hover:text-cyan-400 transition">HOME</a>
-        <a href="#tournaments" onclick="toggleMobileMenu()" class="hover:text-cyan-400 transition">TOURNAMENTS</a>
-        <a href="#membership" onclick="toggleMobileMenu()" class="hover:text-cyan-400 transition">MEMBERSHIP</a>
-        <a href="#leaderboard" onclick="toggleMobileMenu()" class="hover:text-cyan-400 transition">LEADERBOARD</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="hover:text-cyan-400 transition">CONTACT</a>
+        <a href="#home" onclick="toggleMobileMenu()" class="hover:text-cyan-400">HOME</a>
+        <a href="#tournaments" onclick="toggleMobileMenu()" class="hover:text-cyan-400">TOURNAMENTS</a>
+        <a href="#membership" onclick="scrollToSection('membership')" class="hover:text-cyan-400">MEMBERSHIP</a>
+        <a href="#contact" onclick="scrollToSection('contact')" class="hover:text-cyan-400">CONTACT</a>
+        <button onclick="scrollToSection('booking')" class="text-cyan-400 border border-cyan-400 px-6 py-2 rounded">BOOK SLOT</button>
         <hr class="border-white/10 w-full">
-        <button onclick="handleLogout()" class="text-red-500 hover:scale-110 transition">LOGOUT</button>
+        <button onclick="handleLogout()" class="text-red-500">LOGOUT</button>
     </div>
 </div>
 
