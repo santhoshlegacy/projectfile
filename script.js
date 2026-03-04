@@ -329,3 +329,22 @@ function toggleMobileMenu() {
         document.body.style.overflow = 'auto';
     }
 }
+// Function to close any modal
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex', 'modal-active');
+        document.body.style.overflow = 'auto'; // Re-enable scroll
+    }
+}
+
+// Background touch panna modal close aaga (Optional but helpful)
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target == modal) {
+            closeModal(modal.id);
+        }
+    });
+}
