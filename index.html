@@ -43,15 +43,29 @@
         <a href="#tournaments" class="text-white hover:text-cyan-400">Tournaments</a>
         <a href="#membership" class="text-white hover:text-cyan-400">Membership</a>
         <a href="#contact" class="text-white hover:text-cyan-400">Contact</a>
-        <button onclick="scrollToSection('booking')" class="bg-cyan-500 text-black px-4 py-2 rounded-lg font-bold">BOOK SLOT</button>
     </div>
-
+    <div class="flex flex-col gap-8">
+    <button onclick="scrollToSection('membership')" class="text-white text-xl font-bold">MEMBERSHIP</button>
+    <button onclick="scrollToSection('contact')" class="text-white text-xl font-bold">CONTACT</button>
+    <button onclick="scrollToSection('booking')" class="text-cyan-400 border border-cyan-400 px-6 py-2 rounded font-bold">BOOK SLOT</button>
+    </div>
     <div class="lg:hidden relative z-[9999]">
-        <button onclick="toggleMobileMenu()" class="text-cyan-400 text-3xl p-2">
-            <i class="fa-solid fa-bars-staggered"></i>
-        </button>
-    </div>
-</nav>
+    <button onclick="toggleMobileMenu()" class="text-cyan-400 text-3xl p-2">
+    <i class="fa-solid fa-bars-staggered"></i>
+    </button>
+    </div> 
+    <section id="membership" class="py-20 bg-black">
+    <h2 class="text-center text-3xl font-bold text-cyan-400">MEMBERSHIP PLANS</h2>
+    </section>
+
+<section id="booking" class="py-20 bg-gray-900/50">
+    <h2 class="text-center text-3xl font-bold text-purple-500">BOOK YOUR SLOT</h2>
+    </section>
+
+<section id="contact" class="py-20 bg-black">
+    <h2 class="text-center text-2xl font-bold text-white">CONTACT US</h2>
+    </section> 
+    </nav>
 
 <div id="mobileMenu" class="fixed inset-0 z-[5000] hidden bg-black/98 backdrop-blur-xl flex-col items-center justify-center p-6">
     <button onclick="toggleMobileMenu()" class="absolute top-8 right-8 text-cyan-400 text-3xl">

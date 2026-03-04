@@ -170,3 +170,7 @@ section {
 #mobileMenu.flex {
     display: flex !important;
 }
+/* style.css-la idhai add pannu macha */
+section {
+    scroll-margin-top: 100px; /* Nav bar height-ku mela space tharum */
+}

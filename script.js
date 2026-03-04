@@ -350,21 +350,24 @@ window.onclick = function(event) {
 }
 // Smooth Scroll Function
 function scrollToSection(sectionId) {
+    // Menu open-ah irundha close panniduvom
+    const menu = document.getElementById('mobileMenu');
+    if (menu && !menu.classList.contains('hidden')) {
+        toggleMobileMenu();
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
-        // Menu open-ah irundha adhai close pannitu scroll pannanum
-        const menu = document.getElementById('mobileMenu');
-        if (menu && !menu.classList.contains('hidden')) {
-            toggleMobileMenu(); 
-        }
+        const headerOffset = 80; // Nav bar height
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-        // Smooth scroll logic
         window.scrollTo({
-            top: element.offsetTop - 80, // Header padding-kaaga -80
-            behavior: 'smooth'
+            top: offsetPosition,
+            behavior: "smooth"
         });
     } else {
-        console.error("Section not found: " + sectionId);
+        console.log("Section not found: " + sectionId);
     }
 }
 
@@ -376,5 +379,22 @@ function toggleMobileMenu() {
         menu.classList.toggle('flex');
         // Body scroll block
         document.body.style.overflow = menu.classList.contains('flex') ? 'hidden' : 'auto';
+    }
+}
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        // Mobile menu theryudha-nu paathu close pannanum
+        const menu = document.getElementById('mobileMenu');
+        if (menu && !menu.classList.contains('hidden')) {
+            toggleMobileMenu(); 
+        }
+
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    } else {
+        console.log("Macha, intha ID illai: " + sectionId);
     }
 }
