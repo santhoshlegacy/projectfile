@@ -40,9 +40,16 @@ nav {
 }
 
 /* Mobile Menu Button Container */
+/* Mobile Menu Button Layer */
 .lg\:hidden {
+    display: block !important; /* Tailwind override panna */
     position: relative;
-    z-index: 9999 !important; /* Button layer top-la irukanum */
+    z-index: 9999 !important;
+}
+
+/* Ensure section has ID for scrolling */
+#booking {
+    scroll-margin-top: 80px; /* Header cover pannaama irukka padding */
 }
 
 #menuBtn {

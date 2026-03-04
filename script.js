@@ -348,3 +348,31 @@ window.onclick = function(event) {
         }
     });
 }
+// Smooth Scroll Function
+function scrollToSection(sectionId) {
+    const element = document.getElementById(sectionId);
+    if (element) {
+        // Menu open-ah irundha close panniduvom
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+        
+        // Smooth scroll logic
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+}
+
+// Mobile Menu Toggle Fix
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    if (menu) {
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('flex');
+        // Body scroll block
+        document.body.style.overflow = menu.classList.contains('flex') ? 'hidden' : 'auto';
+    }
+}

@@ -66,6 +66,21 @@
         </button>
         </div>
 </div>
+<nav class="flex justify-between items-center p-4 fixed top-0 w-full z-[1000] bg-black/50 backdrop-blur-md">
+    <div class="text-white font-bold text-xl heading-font">LEGACY ARENA</div>
+    
+    <div class="hidden lg:flex gap-6 items-center">
+        <a href="#home" class="text-white hover:text-cyan-400">Home</a>
+        <a href="#tournaments" class="text-white hover:text-cyan-400">Tournaments</a>
+        <button onclick="scrollToSection('booking')" class="bg-cyan-500 text-black px-4 py-2 rounded-lg font-bold hover:scale-105 transition">BOOK SLOT</button>
+    </div>
+
+    <div class="lg:hidden relative z-[9999]">
+        <button id="menuBtn" onclick="toggleMobileMenu()" class="p-2 text-cyan-400 text-3xl">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+    </div>
+</nav>
     </nav>
 
     <main>
